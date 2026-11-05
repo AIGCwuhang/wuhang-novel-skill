@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "chapter_words": {"min": 2300, "max": 4000},
+  "genre": "待确认",
+  "pacing": "按项目题材与读者期待确认；商业连载节奏为默认参考",
+  "cheat_required": false
+}

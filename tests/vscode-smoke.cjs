@@ -1,0 +1,23 @@
+'use strict';
+const assert = require('assert');
+const fs = require('fs');
+const path = require('path');
+const Module = require('module');
+const originalLoad = Module._load;
+Module._load = function (id, parent, isMain) {
+  if (id === 'vscode') return {};
+  return originalLoad.call(this, id, parent, isMain);
+};
+const extensionPath = process.argv[2];
+const project = process.argv[3];
+const extension = require(path.join(extensionPath, 'extension.js'));
+fs.mkdirSync(project, { recursive: true });
+const first = extension.initialize({ extensionPath }, project);
+assert(first.created.includes('SOLOENT.md'));
+assert(fs.existsSync(path.join(project, '.agents/skills/wuhang-novel/SKILL.md')));
+const state = path.join(project, '.novelkit/memory/character_state.md');
+fs.writeFileSync(state, '作者已经完成第205章');
+const second = extension.initialize({ extensionPath }, project);
+assert.strictEqual(fs.readFileSync(state, 'utf8'), '作者已经完成第205章');
+assert.strictEqual(second.created.length, 0);
+console.log('VSIX extracted initializer: passed; host API mocked.');

@@ -1,0 +1,4 @@
+interface:
+  display_name: "武行·网文创作 Skill"
+  short_description: "从新书立项、设定大纲到逐章写作与编辑审稿，用项目记忆管理长篇连载"
+  default_prompt: "使用 $wuhang-novel，在我指定的小说文件夹中初始化项目，并从当前创作阶段开始。"

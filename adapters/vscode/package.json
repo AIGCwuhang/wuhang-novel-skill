@@ -1,0 +1,14 @@
+{
+  "name": "wuhang-novel-skill",
+  "displayName": "武行·网文创作 Skill",
+  "description": "初始化武行小说项目并安装项目级 Skill；本地预览版。",
+  "publisher": "wuhang",
+  "version": "0.2.0",
+  "engines": {"vscode": "^1.80.0"},
+  "categories": ["Other"],
+  "activationEvents": ["onCommand:soloent.initNovelKit"],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [{"command": "soloent.initNovelKit", "title": "武行: 初始化长篇小说流程 Kit"}]
+  }
+}

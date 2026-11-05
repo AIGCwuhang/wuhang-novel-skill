@@ -1,0 +1,12 @@
+{
+  "name": "wuhang-novel-local",
+  "interface": {"displayName": "武行小说创作（本地预览）"},
+  "plugins": [
+    {
+      "name": "wuhang-novel-skill",
+      "source": {"source": "local", "path": "./"},
+      "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"},
+      "category": "Productivity"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+name: Publish preview packages
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check tag and version
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: python3 -c 'import os,pathlib; assert os.environ["RELEASE_TAG"] == "v" + pathlib.Path("VERSION").read_text().strip(), "tag/version mismatch"'
+      - run: python3 -m unittest discover -s tests -v
+      - run: python3 tools/check_project.py
+      - run: python3 tools/build_release.py
+      - name: Publish preview release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: >-
+          gh release create "$RELEASE_TAG"
+          dist/*.zip dist/*.vsix dist/SHA256SUMS
+          --verify-tag --prerelease
+          --title "武行·网文创作 Skill $RELEASE_TAG（预览版）"
+          --notes-file docs/release-notes.md

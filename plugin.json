@@ -1,0 +1,39 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "wuhang-novel-skill",
+  "version": "0.2.0",
+  "description": "武行的长篇网文创作工作流：方向、设定、大纲、逐章写作、编辑审稿与连载记忆。",
+  "author": {
+    "name": "武行"
+  },
+  "keywords": [
+    "novel",
+    "writing",
+    "网文",
+    "大纲",
+    "审稿"
+  ],
+  "extensions": {
+    "com.openai": {
+      "onboardingSkill": "./skills/wuhang-novel/SKILL.md",
+      "interface": {
+        "displayName": "武行·网文创作 Skill",
+        "shortDescription": "从立项到连载的网文创作流程",
+        "longDescription": "由武行整理的长篇网文创作方法，涵盖类型边界、创意设定、总纲卷纲章纲、逐章写作、设定回溯及角色与伏笔记忆。",
+        "developerName": "武行",
+        "category": "Productivity",
+        "capabilities": [
+          "Read",
+          "Write"
+        ],
+        "defaultPrompt": [
+          "使用武行小说创作技能，在我指定的文件夹中初始化新书项目。",
+          "根据我已有的稿件，整理设定与进度并规划下一步。"
+        ],
+        "websiteURL": "https://github.com/AIGCwuhang/wuhang-novel-skill"
+      }
+    }
+  },
+  "repository": "https://github.com/AIGCwuhang/wuhang-novel-skill",
+  "homepage": "https://github.com/AIGCwuhang/wuhang-novel-skill"
+}
