@@ -22,7 +22,7 @@ Choose the package for your tool:
 | Tool | Download | Setup |
 | --- | --- | --- |
 | Codex | [Skill ZIP](https://github.com/AIGCwuhang/wuhang-novel-skill/releases/download/v0.2.0/wuhang-novel-skill-v0.2.0.zip) | Unzip the complete `wuhang-novel` folder into your novel project's `.agents/skills/` directory. [Detailed guide (Chinese)](docs/install-codex.md) |
-| WorkBuddy | [WorkBuddy ZIP](https://github.com/AIGCwuhang/wuhang-novel-skill/releases/download/v0.2.0/wuhang-novel-workbuddy-v0.2.0.zip) | Import through the local skill upload option. This package is an import candidate pending client testing. [Guide (Chinese)](docs/install-workbuddy.md) |
+| WorkBuddy | [WorkBuddy ZIP](https://github.com/AIGCwuhang/wuhang-novel-skill/releases/download/v0.2.0/wuhang-novel-workbuddy-v0.2.0.zip) | Import through the local skill upload option. [Guide (Chinese)](docs/install-workbuddy.md) |
 | Editors that support VSIX | [VSIX](https://github.com/AIGCwuhang/wuhang-novel-skill/releases/download/v0.2.0/wuhang-novel-skill-0.2.0.vsix) | Install the VSIX, open your novel folder, then run `武行: 初始化长篇小说流程 Kit` from the command palette. [Guide (Chinese)](docs/install-vscode.md) |
 
 After installation, create or open a folder for your novel and tell the AI:
@@ -31,7 +31,7 @@ After installation, create or open a folder for your novel and tell the AI:
 
 If you already have material, say what you want to organize and where you want to resume. You can also ask for a single task, such as reviewing a volume outline or developing the first three chapter outlines from existing story notes.
 
-The core workflow does not require a separate API key. The optional batch-summary tool uses your own API configuration and incurs charges from your chosen provider. The skill instructions and default project templates are primarily in Chinese; specify your preferred writing language when starting a project.
+The workflow instructions and default project templates are primarily in Chinese; specify your preferred writing language when starting a project.
 
 The walkthrough may show an earlier version, but the overall workflow is similar. Follow the current setup instructions for installation and file paths. For help, see the [FAQ (Chinese)](docs/faq.md) or [open an issue](https://github.com/AIGCwuhang/wuhang-novel-skill/issues).
 

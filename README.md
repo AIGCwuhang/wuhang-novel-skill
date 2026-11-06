@@ -31,9 +31,7 @@
 
 已有稿件时，直接说明要整理哪些材料、从哪个环节继续。也可以只说“帮我审这份卷纲”或“根据现有设定细化前三章章纲”。
 
-基础创作流程无需另外配置 API Key；可选的批量梗概功能需要你自己的 API 配置，费用由所选服务商收取。
-
-视频版本可能与当前版本不同，但大致流程一致；安装方式和文件路径以当前说明为准。WorkBuddy 包目前为待客户端实测的导入候选包，具体状态见[安装说明](docs/install-workbuddy.md)。遇到使用问题可查看[常见问题](docs/faq.md)或[提交反馈](https://github.com/AIGCwuhang/wuhang-novel-skill/issues)。
+视频版本可能与当前版本不同，但大致流程一致；安装方式和文件路径以当前说明为准。遇到使用问题可查看[常见问题](docs/faq.md)或[提交反馈](https://github.com/AIGCwuhang/wuhang-novel-skill/issues)。
 
 ## 超三千作者实际使用过
 
