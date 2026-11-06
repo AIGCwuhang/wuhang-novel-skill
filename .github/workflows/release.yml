@@ -1,35 +1,73 @@
 name: Publish preview packages
 on:
   push:
+    branches: [main]
     tags: ['v*']
+  workflow_dispatch:
 permissions:
   contents: write
+concurrency:
+  group: preview-package-publish
+  cancel-in-progress: false
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Resolve existing version tag
+        id: version
+        run: |
+          python3 - <<'PY'
+          import os, pathlib, subprocess
+          tag = 'v' + pathlib.Path('VERSION').read_text().strip()
+          if os.environ['GITHUB_REF_TYPE'] == 'tag':
+              assert os.environ['GITHUB_REF_NAME'] == tag, 'tag/version mismatch'
+          exists = subprocess.run(['git', 'show-ref', '--verify', '--quiet', 'refs/tags/' + tag]).returncode == 0
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('tag=' + tag + '\n')
+              output.write('ready=' + str(exists).lower() + '\n')
+          if not exists:
+              print('No version tag yet; skip publishing.')
+          PY
+      - name: Check out the tagged source
+        if: steps.version.outputs.ready == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.version.outputs.tag }}
       - uses: actions/setup-python@v5
+        if: steps.version.outputs.ready == 'true'
         with:
           python-version: '3.11'
       - uses: actions/setup-node@v4
+        if: steps.version.outputs.ready == 'true'
         with:
           node-version: '22'
       - name: Check tag and version
+        if: steps.version.outputs.ready == 'true'
         env:
-          RELEASE_TAG: ${{ github.ref_name }}
+          RELEASE_TAG: ${{ steps.version.outputs.tag }}
         run: python3 -c 'import os,pathlib; assert os.environ["RELEASE_TAG"] == "v" + pathlib.Path("VERSION").read_text().strip(), "tag/version mismatch"'
       - run: python3 -m unittest discover -s tests -v
+        if: steps.version.outputs.ready == 'true'
       - run: python3 tools/check_project.py
+        if: steps.version.outputs.ready == 'true'
       - run: python3 tools/build_release.py
+        if: steps.version.outputs.ready == 'true'
       - name: Publish preview release
+        if: steps.version.outputs.ready == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          RELEASE_TAG: ${{ github.ref_name }}
-        run: >-
-          gh release create "$RELEASE_TAG"
-          dist/*.zip dist/*.vsix dist/SHA256SUMS
-          --verify-tag --prerelease
-          --title "武行·网文创作 Skill $RELEASE_TAG（预览版）"
-          --notes-file docs/release-notes.md
+          RELEASE_TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          if gh release view "$RELEASE_TAG" --json tagName >/dev/null 2>&1; then
+            echo "Release already exists; preserving published assets."
+          else
+            gh release create "$RELEASE_TAG" \
+              dist/*.zip dist/*.vsix dist/SHA256SUMS \
+              --verify-tag --prerelease \
+              --title "武行·网文创作 Skill $RELEASE_TAG（预览版）" \
+              --notes-file docs/release-notes.md
+          fi
